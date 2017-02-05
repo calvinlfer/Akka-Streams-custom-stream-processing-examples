@@ -143,3 +143,17 @@ object Example8 extends App {
 
   source.to(sink).run()
 }
+
+object Example9 extends App {
+  implicit val system = ActorSystem("graphstage-experimentation")
+  implicit val mat = ActorMaterializer()
+
+  val sourceGraph: Graph[SourceShape[Int], Future[Int]] = new EnrichedNumbersSource
+  val source: Source[Int, Future[Int]] = Source.fromGraph(sourceGraph)
+  val sinkGraph: Graph[SinkShape[Int], NotUsed] = new StdOutSink
+  val sink: Sink[Int, NotUsed] = Sink.fromGraph(sinkGraph)
+
+  val materializedResult: Int = Await.result(source.take(10).to(sink).run(), 10 seconds)
+  println(s"Materialized value is $materializedResult")
+  system.terminate()
+}
