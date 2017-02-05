@@ -10,9 +10,9 @@ From the [documentation](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-cu
 *In order to receive asynchronous events that are not arriving as stream elements (for example a completion of a future 
 or a callback from a 3rd party API) one must acquire a `AsyncCallback` by calling `getAsyncCallback()` from the stage 
 logic. The method `getAsyncCallback` takes as a parameter a callback that will be called once the asynchronous event 
-fires. **It is important to not call the callback directly**, instead, the external API must call the `invoke(event)` 
+fires. <strong>It is important to not call the callback directly</strong>, instead, the external API must call the `invoke(event)` 
 method on the returned `AsyncCallback`. The execution engine will take care of calling the provided callback in a 
-**thread-safe** way. The callback can safely access the state of the **GraphStageLogic** implementation.*
+<strong>thread-safe</strong> way. The callback can safely access the state of the `GraphStageLogic` implementation.*
 
 The documentation provides an example but here's something slightly more complex.
 
@@ -45,7 +45,7 @@ Let's walk through those functions
 
 ![image](https://cloud.githubusercontent.com/assets/14280155/22624586/5a7acb9c-eb4e-11e6-91d5-7d6fc1c442ba.png)
 
-I said our asynchronous call could fail by throwing an exception (insert cry here) or it produces a result. Here is a 
+I said our asynchronous call could fail by throwing an exception (:cry:) or it produces a result. Here is a 
 synchronous call that produces numbers and we wrap it in a `Future` to make it asynchronous.
 
 So where are we going to call `invoke` then? 
