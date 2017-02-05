@@ -74,3 +74,6 @@ You can find it in action [here](https://github.com/calvinlfer/Akka-Streams-cust
 
 The example will keep producing random numbers and handle retries internally in the midst of failures that could occur.
 
+#### Credits
+- [Akka documentation](http://doc.akka.io/docs/akka/2.4/scala/stream/stream-customize.html?_ga=1.95210907.668506683.1483746547#Completion)
+- [Akka Streams SQS](https://github.com/s12v/akka-stream-sqs)
