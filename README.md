@@ -50,14 +50,14 @@ synchronous call that produces numbers and we wrap it in a `Future` to make it a
 
 So where are we going to call `invoke` then? 
 
-![image](https://cloud.githubusercontent.com/assets/14280155/22624599/a5c2f7e6-eb4e-11e6-99d8-12547754bf73.png)
+![image](https://cloud.githubusercontent.com/assets/14280155/22624738/09a36ee0-eb53-11e6-936f-0925009092d9.png)
 
 Here's where we listen for completion of the asynchronous call, get the result and call `invoke`. Remember I also said 
 I wanted to retry after X seconds (2 seconds for now), so we do that here.
 
 With all this in place we are ready to write our `OutHandler`.
 
-![image](https://cloud.githubusercontent.com/assets/14280155/22624602/e7e46646-eb4e-11e6-874d-63baa1a7f7f5.png)
+![image](https://cloud.githubusercontent.com/assets/14280155/22624733/d70ba506-eb52-11e6-8eda-abae4d06fadf.png)
 
 As you can see, when we are pulled we have to first check whether we are truly pulled from the downstream or whether we 
 are artificially called from `bufferMessageAndEmulatePull`. So we use the query `isAvailable` on the `outlet` port to 
