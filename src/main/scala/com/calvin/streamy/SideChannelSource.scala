@@ -34,7 +34,7 @@ class SideChannelSource extends GraphStage[SourceShape[Int]] {
             log.error(ex, "Error occurred in SideChannelSource")
             log.info("Attempting again after 2 seconds")
             materializer.scheduleOnce(2 seconds, new Runnable {
-              override def run(): Unit = grabAndInvokeWithRetry(future)
+              override def run(): Unit = grabAndInvokeWithRetry(Future.successful(dangerousComputation()))
             })
         }(materializer.executionContext)
       }
@@ -84,8 +84,8 @@ class SideChannelSource extends GraphStage[SourceShape[Int]] {
             push(outlet, sendValue)
           }
 
-          // obtain more elements if the buffer is empty
-          if (buffer.isEmpty) {
+          // obtain more elements if the buffer is empty and if an asynchronous call already isn't in progress
+          if (buffer.isEmpty && !asyncCallInProgress) {
             grabAndInvokeWithRetry(Future(dangerousComputation())(materializer.executionContext))
           }
         }
